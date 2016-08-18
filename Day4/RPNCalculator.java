@@ -1,6 +1,8 @@
 package ssa;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -8,13 +10,21 @@ public class RPNCalculator {
 
 	public static void main(String[] args) {
 		
-		//Original test array when not called getInput
+		//Create a new ArrayList of equations
+		List<String[]> strArrayList = new ArrayList<>();
+		strArrayList.add(new String[] {"10", "2", "/", "3", "+", "2", "*", "16", "-"});
+		strArrayList.add(new String[] {"1", "2", "3", "+", "*"});
+		strArrayList.add(new String[] {"100", "30", "/", "8", "+"});
+		
+		solveList(strArrayList);
+		
+		//Original test array when not calling getInput
 		//String[] equation = new String[] {"10", "2", "/", "3", "+", "2", "*", "16", "-"};
 		
 		//Get RPN equation to solve as input from user
-		String[] equation = getInput();
+		//String[] equation = getInput();
 		//Pass equation into the function to be solved
-		solve(equation);
+		//solve(equation);
 		
 	}
 	
@@ -30,6 +40,14 @@ public class RPNCalculator {
 		String input = scanner.nextLine();
 		//Return a String[] of separate operators and operands by splitting on spaces
 		return input.split(" ");
+	}
+	
+	public static void solveList(List<String[]> list) {
+		
+		//Pass each String[] into the solve function to calculate result
+		for (String[] str : list) {
+			solve(str);
+		}
 	}
 	
 	public static void solve(String[] equation) {
