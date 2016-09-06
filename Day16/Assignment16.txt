@@ -119,6 +119,12 @@ mysql> select * from grade;
 5 rows in set (0.00 sec)
 
 -----PRO-----
+mysql> alter table assignment add constraint fk_student_id
+    -> foreign key (student_id)
+    -> references student(id);
+Query OK, 5 rows affected (1.06 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
 mysql> explain assignment;
 +----------------+---------+------+-----+---------+-------+
 | Field          | Type    | Null | Key | Default | Extra |
