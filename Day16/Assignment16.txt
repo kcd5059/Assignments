@@ -50,28 +50,31 @@ mysql> select last_name,start_date,id from student order by last_name;
 10 rows in set (0.00 sec)
 
 4.)
-mysql> select * from student where first_name = 'Adam';
-+-----+------------+-----------+---------------------+------------+
-| id  | first_name | last_name | years_of_experience | start_date |
-+-----+------------+-----------+---------------------+------------+
-| 120 | Adam       | Ant       |                   5 | 2016-06-02 |
-+-----+------------+-----------+---------------------+------------+
-1 row in set (0.01 sec)
+mysql> select * from student where first_name = 'Adam' OR first_name = 'James' OR first_name = 'Frank'
+    -> order by last_name desc;
++-----+------------+-----------+------------+------+------+----------+
+| id  | first_name | last_name | start_date | gpa  | sat  | major_id |
++-----+------------+-----------+------------+------+------+----------+
+| 150 | James      | Joyce     | 2016-08-27 |  4.0 | 1350 |        6 |
+| 180 | Frank      | Fountain  | 2016-01-31 |  2.1 |  880 |        2 |
+| 120 | Adam       | Ant       | 2016-06-02 |  3.9 |  432 |        3 |
++-----+------------+-----------+------------+------+------+----------+
+3 rows in set (0.00 sec)
 
 5.)
 mysql> select first_name,last_name,start_date from student
-    -> where start_date > '2016-01-01' and start_date < '2016-06-30';
+    -> where start_date > '2016-01-01' and start_date < '2016-06-30' order by start_date desc;
 +------------+-----------+------------+
 | first_name | last_name | start_date |
 +------------+-----------+------------+
-| Eric       | Ephram    | 2016-03-31 |
 | Adam       | Ant       | 2016-06-02 |
-| Howard     | Hess      | 2016-02-28 |
 | Charles    | Caldwell  | 2016-05-07 |
 | Kevin      | Kraft     | 2016-04-15 |
+| Eric       | Ephram    | 2016-03-31 |
+| Howard     | Hess      | 2016-02-28 |
 | Frank      | Fountain  | 2016-01-31 |
 +------------+-----------+------------+
-6 rows in set (0.00 sec)
+6 rows in set (0.04 sec)
 
 -----ADVANCED-----
 mysql> explain assignment;
