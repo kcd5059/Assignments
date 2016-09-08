@@ -1,0 +1,560 @@
+create table major (
+  id int primary key auto_increment,
+  name varchar(50),
+  req_sat_score int,
+  CHECK (req_sat_score > 399 AND req_sat_score < 1601)
+);
+
+mysql> explain major;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| id            | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name          | varchar(50) | YES  |     | NULL    |                |
+| req_sat_score | int(11)     | YES  |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.06 sec)
+
+insert major (name,req_sat_score) values ('General Business',800);
+insert major (name,req_sat_score) values ('Accounting',1000);
+insert major (name,req_sat_score) values ('Finance',1100);
+insert major (name,req_sat_score) values ('Math',1300);
+insert major (name,req_sat_score) values ('Engineering',1350);
+insert major (name,req_sat_score) values ('Education',900);
+insert major (name,req_sat_score) values ('General Studies',500);
+
+  mysql> select * from major;
++----+------------------+---------------+
+| id | name             | req_sat_score |
++----+------------------+---------------+
+|  1 | General Business |           800 |
+|  2 | Accounting       |          1000 |
+|  3 | Finance          |          1100 |
+|  4 | Math             |          1300 |
+|  5 | Engineering      |          1350 |
+|  6 | Education        |           900 |
+|  7 | General Studies  |           500 |
++----+------------------+---------------+
+7 rows in set (0.00 sec)
+--
+
+
+create table instructor (
+  id int primary key auto_increment,
+  first_name varchar(30),
+  last_name varchar(30),
+  major_id int,
+  foreign key (major_id) references major(id),
+  years_of_experience int,
+  CHECK (years_of_experience > 0),
+  is_tenured tinyint
+);
+
+mysql> explain instructor;
++---------------------+-------------+------+-----+---------+----------------+
+| Field               | Type        | Null | Key | Default | Extra          |
++---------------------+-------------+------+-----+---------+----------------+
+| id                  | int(11)     | NO   | PRI | NULL    | auto_increment |
+| first_name          | varchar(30) | YES  |     | NULL    |                |
+| last_name           | varchar(30) | YES  |     | NULL    |                |
+| major_id            | int(11)     | YES  | MUL | NULL    |                |
+| years_of_experience | int(11)     | YES  |     | NULL    |                |
+| is_tenured          | tinyint(4)  | YES  |     | NULL    |                |
++---------------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from instructor;
++----+------------+--------------+----------+---------------------+------------+
+| id | first_name | last_name    | major_id | years_of_experience | is_tenured |
++----+------------+--------------+----------+---------------------+------------+
+|  1 | Bizzy      | Businesson   |        1 |                   3 |          0 |
+|  2 | County     | Accounterson |        2 |                   9 |          1 |
+|  3 | Phineas    | Phinance     |        3 |                   7 |          1 |
+|  4 | Mathew     | Damon        |        4 |                   3 |          0 |
+|  5 | Ginny      | Eering       |        5 |                  12 |          1 |
+|  6 | Ed         | Yumaction    |        6 |                   1 |          0 |
+|  7 | Derp       | Dorpson      |        7 |                   8 |          1 |
++----+------------+--------------+----------+---------------------+------------+
+7 rows in set (0.00 sec)
+--
+
+
+create table class (
+  id int primary key auto_increment,
+  name varchar(30),
+  course_number int,
+  instructor_id int,
+  foreign key (instructor_id) references instructor(id)
+);
+
+mysql> explain class;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| id            | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name          | varchar(30) | YES  |     | NULL    |                |
+| course_number | int(11)     | YES  |     | NULL    |                |
+| instructor_id | int(11)     | YES  | MUL | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from class;
++----+------------------+---------------+---------------+
+| id | name             | course_number | instructor_id |
++----+------------------+---------------+---------------+
+|  1 | English          |           101 |             7 |
+|  2 | English          |           102 |             7 |
+|  3 | English          |           103 |             7 |
+|  4 | English          |           201 |             7 |
+|  5 | English          |           202 |             7 |
+|  6 | English          |           203 |             7 |
+|  7 | English          |           301 |             7 |
+|  8 | English          |           302 |             7 |
+|  9 | English          |           303 |             7 |
+| 10 | Math             |           201 |             4 |
+| 11 | Math             |           202 |             2 |
+| 12 | Math             |           203 |             4 |
+| 13 | Math             |           204 |             3 |
+| 14 | Math             |           301 |             4 |
+| 15 | Math             |           302 |             2 |
+| 16 | Math             |           303 |             4 |
+| 17 | Math             |           304 |             3 |
+| 18 | History          |           101 |             6 |
+| 19 | History          |           102 |             6 |
+| 20 | History          |           103 |             6 |
+| 21 | Computer Science |           311 |             5 |
+| 22 | Computer Science |           312 |             1 |
+| 23 | Computer Science |           313 |             2 |
+| 24 | Computer Science |           441 |             5 |
+| 25 | Computer Science |           442 |             5 |
+| 26 | Computer Science |           443 |             5 |
+| 27 | Psychology       |           101 |             7 |
+| 28 | Psychology       |           102 |             1 |
+| 29 | Psychology       |           231 |             1 |
+| 30 | Psychology       |           232 |             1 |
+| 31 | Education        |           221 |             7 |
+| 32 | Education        |           222 |             6 |
+| 33 | Education        |           223 |             3 |
+| 34 | Education        |           351 |             6 |
+| 35 | Education        |           352 |             6 |
+| 36 | Education        |           353 |             6 |
++----+------------------+---------------+---------------+
+36 rows in set (0.00 sec)
+--
+
+
+
+create table major_class_relationship (
+  id int primary key auto_increment,
+  major_id int NOT NULL,
+  foreign key (major_id) references major(id),
+  class_id int NOT NULL,
+  foreign key (class_id) references class(id)
+);
+
+mysql> explain major_class_relationship;
++----------+---------+------+-----+---------+----------------+
+| Field    | Type    | Null | Key | Default | Extra          |
++----------+---------+------+-----+---------+----------------+
+| id       | int(11) | NO   | PRI | NULL    | auto_increment |
+| major_id | int(11) | NO   | MUL | NULL    |                |
+| class_id | int(11) | NO   | MUL | NULL    |                |
++----------+---------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from major_class_relationship;
++----+----------+----------+
+| id | major_id | class_id |
++----+----------+----------+
+|  1 |        1 |        1 |
+|  2 |        2 |        1 |
+|  3 |        3 |        1 |
+|  4 |        4 |        1 |
+|  5 |        5 |        1 |
+|  6 |        6 |        1 |
+|  7 |        7 |        1 |
+|  8 |        1 |        2 |
+|  9 |        2 |        2 |
+| 10 |        3 |        2 |
+| 11 |        4 |        2 |
+| 12 |        5 |        2 |
+| 13 |        6 |        2 |
+| 14 |        7 |        2 |
+| 15 |        6 |        3 |
+| 16 |        7 |        3 |
+| 17 |        6 |        4 |
+| 18 |        7 |        4 |
+| 19 |        6 |        5 |
+| 20 |        7 |        5 |
+| 21 |        6 |        5 |
+| 22 |        6 |        7 |
+| 23 |        6 |        7 |
+| 24 |        6 |        8 |
+| 25 |        6 |        9 |
+| 26 |        1 |       10 |
+| 27 |        2 |       10 |
+| 28 |        3 |       10 |
+| 29 |        4 |       10 |
+| 30 |        5 |       10 |
+| 31 |        6 |       10 |
+| 32 |        7 |       10 |
+| 33 |        1 |       11 |
+| 34 |        2 |       11 |
+| 35 |        3 |       11 |
+| 36 |        4 |       11 |
+| 37 |        5 |       11 |
+| 38 |        6 |       11 |
+| 39 |        7 |       11 |
+| 40 |        2 |       12 |
+| 41 |        3 |       12 |
+| 42 |        4 |       12 |
+| 43 |        5 |       12 |
+| 44 |        2 |       13 |
+| 45 |        3 |       13 |
+| 46 |        4 |       13 |
+| 47 |        5 |       13 |
+| 48 |        4 |       14 |
+| 49 |        5 |       14 |
+| 50 |        4 |       15 |
+| 51 |        5 |       15 |
+| 52 |        4 |       16 |
+| 53 |        5 |       16 |
+| 54 |        4 |       17 |
+| 55 |        5 |       17 |
+| 56 |        1 |       18 |
+| 57 |        2 |       18 |
+| 58 |        3 |       18 |
+| 59 |        4 |       18 |
+| 60 |        5 |       18 |
+| 61 |        6 |       18 |
+| 62 |        7 |       18 |
+| 63 |        6 |       19 |
+| 64 |        6 |       20 |
+| 65 |        1 |       22 |
+| 66 |        2 |       21 |
+| 67 |        3 |       21 |
+| 68 |        4 |       21 |
+| 69 |        5 |       21 |
+| 70 |        6 |       21 |
+| 71 |        7 |       21 |
+| 72 |        4 |       22 |
+| 73 |        5 |       22 |
+| 74 |        4 |       23 |
+| 75 |        5 |       23 |
+| 76 |        4 |       24 |
+| 77 |        4 |       25 |
+| 78 |        4 |       26 |
+| 79 |        1 |       27 |
+| 80 |        2 |       27 |
+| 81 |        3 |       27 |
+| 82 |        4 |       27 |
+| 83 |        5 |       27 |
+| 84 |        6 |       27 |
+| 85 |        7 |       27 |
+| 86 |        6 |       28 |
+| 87 |        7 |       28 |
+| 88 |        6 |       29 |
+| 89 |        7 |       29 |
+| 90 |        6 |       30 |
+| 91 |        7 |       30 |
+| 92 |        6 |       31 |
+| 93 |        6 |       32 |
+| 94 |        6 |       33 |
+| 95 |        6 |       34 |
+| 96 |        6 |       35 |
+| 97 |        6 |       36 |
++----+----------+----------+
+97 rows in set (0.00 sec)
+
+--demonstrate functionality of major_class_relationship table
+mysql> select major.name as 'Major',
+concat(class.name,' ',class.course_number) as 'Class' from major
+join major_class_relationship on major.id = major_class_relationship.major_id
+join class on class.id = major_class_relationship.class_id
+where major.name = 'Accounting';
++------------+----------------------+
+| Major      | Class                |
++------------+----------------------+
+| Accounting | English 101          |
+| Accounting | English 102          |
+| Accounting | Math 201             |
+| Accounting | Math 202             |
+| Accounting | Math 203             |
+| Accounting | Math 204             |
+| Accounting | History 101          |
+| Accounting | Computer Science 311 |
+| Accounting | Psychology 101       |
++------------+----------------------+
+9 rows in set (0.00 sec)
+--
+
+
+
+create table student_class_relationship (
+  id int primary key auto_increment,
+  student_id int NOT NULL,
+  foreign key (student_id) references student(id),
+  class_id int NOT NULL,
+  foreign key (class_id) references class(id)
+);
+
+mysql> explain student_class_relationship;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| student_id | int(11) | NO   | MUL | NULL    |                |
+| class_id   | int(11) | NO   | MUL | NULL    |                |
++------------+---------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student_class_relationship;
++----+------------+----------+
+| id | student_id | class_id |
++----+------------+----------+
+|  1 |        100 |        1 |
+|  2 |        100 |       10 |
+|  3 |        110 |        1 |
+|  4 |        110 |       10 |
+|  5 |        120 |        1 |
+|  6 |        120 |       10 |
+|  7 |        130 |        1 |
+|  8 |        130 |       10 |
+|  9 |        140 |        1 |
+| 10 |        140 |       10 |
+| 11 |        150 |        1 |
+| 12 |        150 |       10 |
+| 13 |        160 |        1 |
+| 14 |        160 |       10 |
+| 15 |        170 |        1 |
+| 16 |        170 |       10 |
+| 17 |        180 |        1 |
+| 18 |        180 |       10 |
+| 19 |        190 |        1 |
+| 20 |        190 |       10 |
++----+------------+----------+
+20 rows in set (0.00 sec)
+
+--demonstrate functionality of student_class_relationship table
+mysql> select concat(student.last_name,', ',student.first_name) as 'Name',
+concat(class.name,' ',class.course_number) as 'Class' from student
+join student_class_relationship
+on student.id = student_class_relationship.student_id
+join class
+on class.id = student_class_relationship.class_id
+where student.last_name = 'Dumas';
+
++-------------+-------------+
+| Name        | Class       |
++-------------+-------------+
+| Dumas, Doug | English 101 |
+| Dumas, Doug | Math 201    |
++-------------+-------------+
+2 rows in set (0.00 sec)
+
+alter table student
+ add gpa decimal(5,1),
+ add sat int,
+ add major_id int,
+ add constraint foreign key (major_id) references major(id),
+ drop years_of_experience;
+
+ mysql> explain student;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| id         | int(11)      | NO   | PRI | NULL    |       |
+| first_name | varchar(30)  | NO   |     | NULL    |       |
+| last_name  | varchar(30)  | NO   |     | NULL    |       |
+| start_date | date         | NO   |     | NULL    |       |
+| gpa        | decimal(5,1) | YES  |     | NULL    |       |
+| sat        | int(11)      | YES  |     | NULL    |       |
+| major_id   | int(11)      | YES  | MUL | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----+------------+-----------+------+------+----------+
+| id  | first_name | last_name | gpa  | sat  | major_id |
++-----+------------+-----------+------+------+----------+
+| 100 | Eric       | Ephram    |  4.0 | 1600 |        1 |
+| 110 | Greg       | Gould     |  3.5 |  860 |        2 |
+| 120 | Adam       | Ant       |  3.9 | NULL |        3 |
+| 130 | Howard     | Hess      |  2.6 |  745 |        4 |
+| 140 | Charles    | Caldwell  |  3.2 | 1200 |        5 |
+| 150 | James      | Joyce     |  4.0 | 1350 |        6 |
+| 160 | Doug       | Dumas     |  1.2 | 1300 |        7 |
+| 170 | Kevin      | Kraft     |  3.7 | 1050 |        4 |
+| 180 | Frank      | Fountain  |  2.1 |  880 |        2 |
+| 190 | Brian      | Biggs     |  4.0 |  750 |        6 |
++-----+------------+-----------+------+------+----------+
+10 rows in set (0.00 sec)
+--
+
+
+
+alter table assignment
+ add class_id int,
+ add constraint foreign key (class_id) references class(id);
+
+ mysql> explain assignment;
+ +----------------+---------+------+-----+---------+-------+
+ | Field          | Type    | Null | Key | Default | Extra |
+ +----------------+---------+------+-----+---------+-------+
+ | id             | int(11) | NO   | PRI | NULL    |       |
+ | student_id     | int(11) | NO   | MUL | NULL    |       |
+ | assignment_nbr | int(11) | NO   |     | NULL    |       |
+ | grade_id       | int(11) | YES  | MUL | NULL    |       |
+ | class_id       | int(11) | YES  | MUL | NULL    |       |
+ +----------------+---------+------+-----+---------+-------+
+ 5 rows in set (0.00 sec)
+
+ mysql> select * from assignment;
++----+------------+----------------+----------+----------+
+| id | student_id | assignment_nbr | grade_id | class_id |
++----+------------+----------------+----------+----------+
+|  1 |        100 |              1 |        0 |       10 |
+|  2 |        110 |              1 |        1 |       10 |
+|  3 |        120 |              1 |        2 |       10 |
+|  4 |        130 |              1 |        3 |       10 |
+|  5 |        140 |              1 |        4 |       10 |
++----+------------+----------------+----------+----------+
+5 rows in set (0.00 sec)
+
+--query for readable assignment information for each student
+select concat(student.last_name,', ',student.first_name) as 'Name',
+concat(class.name,' ', class.course_number) as 'Class',
+assignment_nbr as 'Assignment#', grade.value as 'Grade' from assignment
+join student on assignment.student_id = student.id
+join grade on grade_id = grade.id
+join class on class_id = class.id;
+
++-------------------+----------+-------------+-----------------------------+
+| Name              | Class    | Assignment# | Grade                       |
++-------------------+----------+-------------+-----------------------------+
+| Ephram, Eric      | Math 201 |           1 | Incomplete                  |
+| Gould, Greg       | Math 201 |           1 | Complete and unsatisfactory |
+| Ant, Adam         | Math 201 |           1 | Complete and satisfactory   |
+| Hess, Howard      | Math 201 |           1 | Exceeds expectations        |
+| Caldwell, Charles | Math 201 |           1 | Not graded                  |
++-------------------+----------+-------------+-----------------------------+
+5 rows in set (0.00 sec)
+
+--triggers for major table
+ DELIMITER $$
+ CREATE TRIGGER `major_trg_ins` BEFORE INSERT ON `major`
+FOR EACH ROW
+BEGIN
+    IF NOT(New.req_sat_score > 399 AND New.req_sat_score < 1601) THEN
+    SIGNAL SQLSTATE '10000'
+        SET MESSAGE_TEXT = 'check constraint on major failed during insert';
+    END IF;
+END;
+$$
+
+CREATE TRIGGER `major_trg_upd` BEFORE UPDATE ON `major`
+FOR EACH ROW
+BEGIN
+    IF NOT(New.req_sat_score > 399 AND New.req_sat_score < 1601) THEN
+    SIGNAL SQLSTATE '10000'
+        SET MESSAGE_TEXT = 'check constraint on major failed during update';
+    END IF;
+END;
+$$
+DELIMITER ;
+--limiter test
+mysql> insert major (name,req_sat_score) values ('test',1601);
+ERROR 1644 (10000): check constraint on major failed during insert
+mysql> insert major (name,req_sat_score) values ('test',399);
+ERROR 1644 (10000): check constraint on major failed during insert
+
+--triggers for instructor table
+DELIMITER $$
+CREATE TRIGGER `instructor_trg_ins` BEFORE INSERT ON `instructor`
+FOR EACH ROW
+BEGIN
+   IF NOT(New.years_of_experience > 0) THEN
+   SIGNAL SQLSTATE '10000'
+       SET MESSAGE_TEXT = 'check constraint on instructor failed during insert';
+   END IF;
+END;
+$$
+
+CREATE TRIGGER `instructor_trg_upd` BEFORE UPDATE ON `instructor`
+FOR EACH ROW
+BEGIN
+   IF NOT(New.years_of_experience > 0) THEN
+   SIGNAL SQLSTATE '10000'
+       SET MESSAGE_TEXT = 'check constraint on instructor failed during update';
+   END IF;
+END;
+$$
+DELIMITER ;
+--limiter test
+mysql> insert instructor (years_of_experience) values (0);
+ERROR 1644 (10000): check constraint on instructor failed during insert
+
+--Advanced steps
+create table class_prerequisite (
+id int primary key auto_increment,
+class_id int NOT NULL,
+foreign key (class_id) references class(id),
+prereq_class_id int,
+foreign key (prereq_class_id) references class(id)
+)
+
+mysql> explain class_prerequisite;
++-----------------+---------+------+-----+---------+----------------+
+| Field           | Type    | Null | Key | Default | Extra          |
++-----------------+---------+------+-----+---------+----------------+
+| id              | int(11) | NO   | PRI | NULL    | auto_increment |
+| class_id        | int(11) | NO   | MUL | NULL    |                |
+| prereq_class_id | int(11) | YES  | MUL | NULL    |                |
++-----------------+---------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+--show all classes and their prerequisite classes
+select concat(class.name,' ',class.course_number) as 'Class',
+concat(c2.name,' ',c2.course_number) as 'Prerequisite' from class
+join class_prerequisite
+on class.id = class_prerequisite.class_id
+join class_prerequisite cp
+on class_prerequisite.prereq_class_id = cp.prereq_class_id
+join class c2
+on c2.id = cp.prereq_class_id;
+
++----------------------+----------------------+
+| Class                | Prerequisite         |
++----------------------+----------------------+
+| English 102          | English 101          |
+| English 103          | English 102          |
+| English 201          | English 103          |
+| English 202          | English 201          |
+| English 203          | English 202          |
+| English 301          | English 203          |
+| English 302          | English 301          |
+| English 303          | English 302          |
+| Math 202             | Math 201             |
+| Math 203             | Math 202             |
+| Math 204             | Math 203             |
+| Math 301             | Math 204             |
+| Math 302             | Math 301             |
+| Math 303             | Math 302             |
+| Math 304             | Math 303             |
+| History 102          | History 101          |
+| History 103          | History 102          |
+| Computer Science 312 | Computer Science 311 |
+| Computer Science 313 | Computer Science 312 |
+| Computer Science 441 | Computer Science 313 |
+| Computer Science 442 | Computer Science 441 |
+| Computer Science 443 | Computer Science 442 |
+| Psychology 102       | Psychology 101       |
+| Psychology 231       | Psychology 102       |
+| Psychology 232       | Psychology 231       |
+| Education 222        | Education 221        |
+| Education 223        | Education 222        |
+| Education 351        | Education 223        |
+| Education 352        | Education 351        |
+| Education 353        | Education 352        |
++----------------------+----------------------+
+30 rows in set (0.00 sec)
