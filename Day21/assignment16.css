@@ -1,0 +1,42 @@
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
+.center {
+	text-align: center;
+}
+div {
+	width: 49%;
+	display: inline-block;
+	text-align: center;
+}
+td:first-child {
+	font-weight: bold;
+}
+td:nth-child(3) {
+	color: red;
+}
+td:nth-child(4) {
+	font-style: italic;
+}
+td {
+	padding: 2px;
+}
+img {
+	height: 100px;
+	width: 100px;
+}
+#footer {
+	font-size: 5;
+	font-style: italic;
+	text-align: center;
+	position: bottom;
+	width: 100%;
+}
+ul {
+	list-style: none;
+}
+hr {
+	width: 50%;
+}
+
