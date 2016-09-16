@@ -60,3 +60,28 @@ create procedure display_orders()
    select * from orders;
    END//
 DELIMITER ;
+
+create table student(
+  id int(11) primary key auto_increment,
+  first_name varchar(30) NOT NULL,
+  last_name varchar(30) NOT NULL,
+  gpa decimal(5,1),
+  sat int(11),
+  major_id int(11),
+  foreign key (major_id) references major(id)
+);
+
+insert into major_class_relationship (major_id,class_id) values (5,10101);
+insert into major_class_relationship (major_id,class_id) values (5,10102);
+insert into major_class_relationship (major_id,class_id) values (6,10101);
+insert into major_class_relationship (major_id,class_id) values (6,10102);
+insert into major_class_relationship (major_id,class_id) values (7,10101);
+insert into major_class_relationship (major_id,class_id) values (7,10102);
+
+--This is an example procedure that uses PROCEDURE() INTO some_variable
+  CREATE DEFINER=`root`@`localhost` PROCEDURE `get_count_for_sat`(IN the_sat INT, OUT the_count INT)
+BEGIN
+
+	SELECT COUNT(*) INTO the_count FROM student where sat=the_sat;
+
+END

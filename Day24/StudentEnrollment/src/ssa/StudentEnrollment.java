@@ -29,22 +29,42 @@ public class StudentEnrollment {
 		// Assign major to student
 //		assignMajor(191, 3);
 //		assignMajor(192, 7);
-		// This one fails
-//		assignMajor(193, 2);
+		//assignMajor(193, 2); //This fails because her SAT score is too low
 //		assignMajor(194, 5);
 //		assignMajor(195, 6);
 		
-		// Assign student (Adam Zapel) to classes
+		// Assign student (Adam Zapel) to classes then print report
 //		addClass(191,10101);
 //		addClass(191,10102);
 //		addClass(191,40311);
 //		addClass(191,20201);
-		
 		printReport(191);
 		
+//		addClass(192,10101);
+//		addClass(192, 10101);
+//		addClass(192, 30101);
+//		addClass(192, 40311);
+		printReport(192);
 		
-
-	}
+//		addClass(193, 10101);
+//		addClass(193, 10102);
+//		addClass(193, 20401);
+//		addClass(193, 40311);
+		printReport(193);
+		
+//		addClass(194, 10101);
+//		addClass(194, 10102);
+//		addClass(194, 20401);
+//		addClass(194, 40311);
+		printReport(194);
+		
+//		addClass(195, 10101);
+//		addClass(195, 10102);
+//		addClass(195, 60221);
+//		addClass(195, 30101);
+		printReport(195);
+		
+		}
 
 	private static void makeConnection() {
 
@@ -69,7 +89,7 @@ public class StudentEnrollment {
 	}
 
 	public static void enrollStudent(String fName, String lName, int sat, double gpa) throws SQLException {
-
+		
 		try {
 			makeConnection();
 			prepStat = conn.prepareStatement("INSERT student (first_name,last_name,sat,gpa) values (?,?,?,?)");
@@ -87,11 +107,61 @@ public class StudentEnrollment {
 		}
 
 	}
+	
+	public static Student getStudent(int studentId) throws SQLException {
+		
+		Student student = new Student();
+		makeConnection();
+		
+		try {
+			prepStat = conn.prepareStatement("SELECT * FROM student WHERE id = ?");
+			prepStat.setInt(1, studentId);
+			rs = prepStat.executeQuery();
+			
+			while(rs.next()) {
+				student = new Student(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getInt("sat"),
+						rs.getDouble("gpa"), rs.getInt("major_id"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return student;
+		
+	}
+	
+	public static Major getMajor(int majorId) throws SQLException {
+		
+		Major major = new Major();
+		makeConnection();
+		
+		try {
+			prepStat = conn.prepareStatement("SELECT * FROM major WHERE id = ?");
+			prepStat.setInt(1, majorId);
+			rs = prepStat.executeQuery();
+			
+			while(rs.next()) {
+				major = new Major(rs.getInt("id"), rs.getString("description"), rs.getInt("req_sat"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return major;
+	}
 
 	public static void assignMajor(int studentId, int majorId) throws SQLException {
-
-		int reqSat = getReqSAT(majorId);;
-		int sat = getSAT(studentId);
+		Student student = getStudent(studentId);
+		Major major = getMajor(majorId);
+		
+		int reqSat = major.getRequiredSAT();
+		int sat = student.getSAT();
 		
 		if (sat < reqSat) {
     		printValidMajors(sat, majorId);
@@ -118,27 +188,6 @@ public class StudentEnrollment {
 		}
 	}
 	
-	private static String getDescription(int majorId) throws SQLException {
-		String description = "";
-
-		try {
-			makeConnection();
-			prepStat = conn.prepareStatement("SELECT description FROM major WHERE id = ?");
-			prepStat.setInt(1, majorId);
-			rs = prepStat.executeQuery();
-
-			if (rs.next())
-				description = rs.getString("description");
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
-		return description;
-	}
 
 	private static void updateMajor(int studentId, int majorId) throws SQLException {
 		
@@ -159,8 +208,10 @@ public class StudentEnrollment {
 
 	public static void printValidMajors(int sat, int majorId) throws SQLException {
 		
-		String description = getDescription(majorId);
-		int reqSat = getReqSAT(majorId);
+		Major major = getMajor(majorId);
+		
+		String description = major.getDescription();
+		int reqSat = major.getRequiredSAT();
 
 		System.out.println("Sorry, but " + description + " requires a SAT of " + reqSat + ".");
 		System.out.println("With a SAT score of " + sat + " you may choose from the following majors:");
@@ -182,103 +233,43 @@ public class StudentEnrollment {
 		}
 	}
 
-	private static int getSAT(int studentId) throws SQLException {
-
-		int sat = 0;
-
-		try {
-			makeConnection();
-			prepStat = conn.prepareStatement("SELECT sat FROM student WHERE id = ?");
-			prepStat.setInt(1, studentId);
-			rs = prepStat.executeQuery();
-
-			if (rs.next())
-				sat = rs.getInt("sat");
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
-		return sat;
-
-	}
-
-	private static int getReqSAT(int majorId) throws SQLException {
-
-		int reqSat = 0;
-
-		try {
-			makeConnection();
-			prepStat = conn.prepareStatement("SELECT req_sat FROM major WHERE id = ?");
-			prepStat.setInt(1, majorId);
-			rs = prepStat.executeQuery();
-
-			if (rs.next())
-				reqSat = rs.getInt("req_sat");
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
-		return reqSat;
-
-	}
-	
-	private static String getFullName(int studentId) throws SQLException {
-		
-		String fullName = "";
-		
-		try {
-			makeConnection();
-			prepStat = conn.prepareStatement("SELECT first_name,last_name FROM student WHERE id = ?");
-			prepStat.setInt(1, studentId);
-			rs = prepStat.executeQuery();
-			
-			if (rs.next())
-				fullName = rs.getString("first_name") + " " + rs.getString("last_name");
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-		
-		return fullName;
-	}
 	
 	public static void printReport(int studentId) throws SQLException {
 		
-		String fullName = getFullName(studentId);
-		int sat = getSAT(studentId);
-		int majorId = getMajorId(studentId);
-		String majorDescription = getDescription(majorId);
-		int reqSAT = getReqSAT(majorId);
-		ArrayList<String> classList = getClasses(studentId);
+		Student student = getStudent(studentId);
+		Major major = getMajor(student.getMajorId());
+		String majorDescription = major.getDescription();
+		int reqSAT = major.getRequiredSAT();
+		ArrayList<AClass> classList = getClasses(studentId);
 		
 		System.out.println("Education System - Enrollment Process");
 		System.out.println("=====================================\n");
-		System.out.println("Enrolled " + fullName + " as a new student.");
-		System.out.println(fullName + " has an SAT score of " + sat + ".");
-		System.out.println("Assigned " + fullName + " to the " + majorDescription + " which requires a required SAT score of " + reqSAT + ".");
-		System.out.println("Enrolled " + fullName + " in the following four classes:");
-		
-		for (String aClass : classList) {
-			System.out.println(aClass);
+		System.out.println("Enrolled " + student.getFullName() + " as a new student.");
+		System.out.println(student.getFullName() + " has an SAT score of " + student.getSAT() + ".");
+		if (majorDescription == null) {
+			System.out.println(student.getFirstName() + " has NOT been assigned to a major.");
+		} else {
+			System.out.println("Assigned " + student.getFullName() + " to the " + majorDescription +
+					" major which requires an SAT score of " + reqSAT + ".");
 		}
+		System.out.println("Enrolled " + student.getFullName() + " in the following four classes:");
 		
-		
-		
+		for (AClass aClass : classList) {
+			String classTitle = aClass.getSubject() + " " + aClass.getSection();
+			int classId = aClass.getId();
+			
+			System.out.print(classTitle);
+			if (isRequiredClass(classId,student.getMajorId())) {
+				System.out.println(" required for major");
+			} else {
+				System.out.println(" elective (not required for major)");
+			}
+		}
 	}
 	
-	private static ArrayList<String> getClasses(int studentId) throws SQLException {
+	private static ArrayList<AClass> getClasses(int studentId) throws SQLException {
 		
-		ArrayList<String> classList = new ArrayList<>();
+		ArrayList<AClass> classList = new ArrayList<>();
 		ArrayList<Integer> classIds = new ArrayList<>();
 		
 		try {
@@ -287,8 +278,21 @@ public class StudentEnrollment {
 			prepStat.setInt(1, studentId);
 			rs = prepStat.executeQuery();
 
+			// Collect classIds
 			while(rs.next()) {
 				classIds.add(rs.getInt("class_id"));
+			}
+			
+			// Cycle through classIds and collect details of each class
+			for (int classId : classIds) {
+				prepStat = conn.prepareStatement("SELECT * FROM class where id = ?");
+				prepStat.setInt(1, classId);
+				
+				rs = prepStat.executeQuery();
+				while (rs.next()) {
+					classList.add(new AClass(rs.getInt("id"), rs.getString("subject"), rs.getString("section"), rs.getInt("instructor_id")));
+				}
+				
 			}
 			
 
@@ -299,58 +303,34 @@ public class StudentEnrollment {
 			close();
 		}
 		
-		for (Integer id : classIds) {
-			classList.add(getClassString(id));
-		}
-		
 		return classList;
 	}
 	
-	private static String getClassString(int classId) throws SQLException {
+	
+	private static boolean isRequiredClass(int classId, int majorId) throws SQLException {
 		
-		String classString = "";
-		
+		boolean isRequired = false;
 		try {
 			makeConnection();
-			prepStat = conn.prepareStatement("SELECT subject,section FROM class WHERE id = ?");
+			prepStat = conn.prepareStatement("SELECT * FROM major_class_relationship WHERE class_id = ? AND major_id = ?");
 			prepStat.setInt(1, classId);
+			prepStat.setInt(2, majorId);
+			
 			rs = prepStat.executeQuery();
-
-			if (rs.next())
-				classString = rs.getString("subject") + " " + rs.getString("section");
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
+			if(rs.next())
+				isRequired = true;
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
 		
-		return classString;
+				
+		return isRequired;
 	}
 	
-	private static int getMajorId(int studentId) throws SQLException {
-		
-		int majorId = 0;
-
-		try {
-			makeConnection();
-			prepStat = conn.prepareStatement("SELECT major_id FROM student WHERE id = ?");
-			prepStat.setInt(1, studentId);
-			rs = prepStat.executeQuery();
-
-			if (rs.next())
-				majorId = rs.getInt("major_id");
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
-		return majorId;
-	}
 
 	private static void close() throws SQLException {
 
