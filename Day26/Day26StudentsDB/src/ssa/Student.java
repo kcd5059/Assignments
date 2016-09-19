@@ -9,7 +9,6 @@ public class Student {
 	private double gpa;
 	private int majorId;
 	
-	
 	public String getFullName() {
 		return firstName + " " + lastName;
 	}

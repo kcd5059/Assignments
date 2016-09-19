@@ -96,6 +96,23 @@ public class Students {
 		}
 		return rowsAffected;
 	}
+	
+	// Update students id, given the last name and desiredId
+	public int updateIdByLastName(String lastName, int desiredId) {
+
+		int rowsAffected = -1;
+		try {
+			createConnection();
+			String query = String.format("UPDATE student SET id = %d WHERE last_name = '%s'", desiredId, lastName);
+
+			rowsAffected = sql.executeUpdate(query);
+			sql.close();
+			return rowsAffected;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowsAffected;
+	}
 
 	// Delete student record by last name
 	public int deleteByLastName(String lastName) {
