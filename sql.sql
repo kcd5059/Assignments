@@ -85,3 +85,7 @@ BEGIN
 	SELECT COUNT(*) INTO the_count FROM student where sat=the_sat;
 
 END
+
+select student.first_name as "Name",description as 'Major',req_sat from major
+join student on major_id = major.id
+where student.id = 195;

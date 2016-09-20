@@ -6,7 +6,6 @@ public class Mainline {
 
 	public static void main(String[] args) {
 		
-		/*
 		// ** CORE ASSIGNMENT **
 		System.out.println("** CORE ASSIGNMENT **");
 	    Students students = new Students();
@@ -69,17 +68,6 @@ public class Mainline {
 	    for(Student student : orderedStudents) {
 	    	System.out.println(student);
 	    }
-	    */
-		
-		Students students2 = new Students();
-		Student student = students2.getById(195);
-		student.loadMajor();
-		//System.out.println(students2.insert(student));
-		student.setMajorId(4);
-		students2.update(student);
-		student = students2.getById(195);
-		System.out.println(student);
-		
 
 
 	}

@@ -18,9 +18,9 @@ public class Students {
 					"INSERT student (first_name,last_name,sat,gpa,major_id) values ('%s','%s',%d,%f,%d)",
 					student.getFirstName(), student.getLastName(), student.getSAT(), student.getGPA(),
 					student.getMajorId());
-			int studentId = sql.executeInsert(query);
+			int rowsAffected = sql.executeUpdate(query);
 			sql.close();
-			return studentId;
+			return rowsAffected;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -157,7 +157,7 @@ public class Students {
 				student.setLastName(rs.getString("last_name"));
 				student.setSAT(rs.getInt("sat"));
 				student.setGPA(rs.getInt("gpa"));
-				student.loadMajor();
+				student.setMajorId(rs.getInt("major_id"));
 			}
 
 			rs.close();
@@ -184,7 +184,7 @@ public class Students {
 				student.setLastName(rs.getString("last_name"));
 				student.setSAT(rs.getInt("sat"));
 				student.setGPA(rs.getDouble("gpa"));
-				student.loadMajor();
+				student.setMajorId(rs.getInt("major_id"));
 				students.add(student);
 			}
 
@@ -210,7 +210,7 @@ public class Students {
 				student.setLastName(rs.getString("last_name"));
 				student.setSAT(rs.getInt("sat"));
 				student.setGPA(rs.getInt("gpa"));
-				student.loadMajor();
+				student.setMajorId(rs.getInt("major_id"));
 			}
 
 			rs.close();

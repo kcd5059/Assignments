@@ -2,9 +2,9 @@ package ssa;
 
 public class Major {
 	
-	private int id = -1;
+	private int id;
 	private String description;
-	private int requiredSAT = -1;
+	private int requiredSAT;
 	
 		
 	public int getId() {
@@ -38,12 +38,5 @@ public class Major {
 	}
 	
 	public Major () {}
-
-	@Override
-	public String toString() {
-		return "Major: " + this.getId() + " " + this.getDescription() + " " + this.getRequiredSAT();
-	}
-	
-	
 
 }

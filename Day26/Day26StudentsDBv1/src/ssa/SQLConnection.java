@@ -18,21 +18,6 @@ public class SQLConnection {
 			throw ex; 
 		}
 	}
-	public int executeInsert(String sql) throws SQLException {
-		Statement stat = conn.createStatement();
-		try {
-			int primaryKey = -1;
-			stat.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			ResultSet rs = stat.getGeneratedKeys();
-			if(rs.next()){
-				primaryKey = rs.getInt(1);
-			}
-			rs.close();
-			return primaryKey;
-		} catch (SQLException ex) {
-			throw ex; 
-		}
-	}
 	public ResultSet executeQuery(String sql) throws SQLException {
 		Statement stat = conn.createStatement();
 		try {
