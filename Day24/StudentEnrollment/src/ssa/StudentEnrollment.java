@@ -19,49 +19,49 @@ public class StudentEnrollment {
 
 	public static void main(String[] args) throws SQLException {
 
-		// Enroll each student
-		// enrollStudent("Adam","Zapel",1200,3.0);
-		// enrollStudent("Graham","Krakir",500,2.5);
-		// enrollStudent("Ella","Vader",800,3.0);
-		// enrollStudent("Stanley","Kupp",1350,3.3);
-		// enrollStudent("Lou","Zar",950,3.0);
+		 // Enroll each student
+		 enrollStudent(191,"Adam","Zapel",1200,3.0);
+		 enrollStudent(192,"Graham","Krakir",500,2.5);
+		 enrollStudent(193,"Ella","Vader",800,3.0);
+		 enrollStudent(194,"Stanley","Kupp",1350,3.3);
+		 enrollStudent(195,"Lou","Zar",950,3.0);
 		
 		// Assign major to student
-//		assignMajor(191, 3);
-//		assignMajor(192, 7);
-		//assignMajor(193, 2); //This fails because her SAT score is too low
-//		assignMajor(194, 5);
-//		assignMajor(195, 6);
+		assignMajor(191, 3);
+		assignMajor(192, 7);
+		assignMajor(193, 2); //This fails because her SAT score is too low, prints valid majors 
+		assignMajor(194, 5);
+		assignMajor(195, 6);
 		
 		// Assign student (Adam Zapel) to classes then print report
-//		addClass(191,10101);
-//		addClass(191,10102);
-//		addClass(191,40311);
-//		addClass(191,20201);
+		addClass(191,10101);
+		addClass(191,10102);
+		addClass(191,40311);
+		addClass(191,20201);
 		printReport(191);
 		
-//		addClass(192,10101);
-//		addClass(192, 10101);
-//		addClass(192, 30101);
-//		addClass(192, 40311);
+		addClass(192,10101);
+		addClass(192, 10101);
+		addClass(192, 30101);
+		addClass(192, 40311);
 		printReport(192);
 		
-//		addClass(193, 10101);
-//		addClass(193, 10102);
-//		addClass(193, 20401);
-//		addClass(193, 40311);
+		addClass(193, 10101);
+		addClass(193, 10102);
+		addClass(193, 20401);
+		addClass(193, 40311);
 		printReport(193);
 		
-//		addClass(194, 10101);
-//		addClass(194, 10102);
-//		addClass(194, 20401);
-//		addClass(194, 40311);
+		addClass(194, 10101);
+		addClass(194, 10102);
+		addClass(194, 20401);
+		addClass(194, 40311);
 		printReport(194);
 		
-//		addClass(195, 10101);
-//		addClass(195, 10102);
-//		addClass(195, 60221);
-//		addClass(195, 30101);
+		addClass(195, 10101);
+		addClass(195, 10102);
+		addClass(195, 60221);
+		addClass(195, 30101);
 		printReport(195);
 		
 		}
@@ -88,16 +88,17 @@ public class StudentEnrollment {
 		}
 	}
 
-	public static void enrollStudent(String fName, String lName, int sat, double gpa) throws SQLException {
+	public static void enrollStudent(int id, String fName, String lName, int sat, double gpa) throws SQLException {
 		
 		try {
 			makeConnection();
-			prepStat = conn.prepareStatement("INSERT student (first_name,last_name,sat,gpa) values (?,?,?,?)");
+			prepStat = conn.prepareStatement("INSERT student (id,first_name,last_name,sat,gpa) values (?,?,?,?,?)");
 
-			prepStat.setString(1, fName);
-			prepStat.setString(2, lName);
-			prepStat.setInt(3, sat);
-			prepStat.setDouble(4, gpa);
+			prepStat.setInt(1, id);
+			prepStat.setString(2, fName);
+			prepStat.setString(3, lName);
+			prepStat.setInt(4, sat);
+			prepStat.setDouble(5, gpa);
 
 			prepStat.executeUpdate();
 		} catch (Exception e) {
@@ -265,6 +266,7 @@ public class StudentEnrollment {
 				System.out.println(" elective (not required for major)");
 			}
 		}
+		System.out.println();
 	}
 	
 	private static ArrayList<AClass> getClasses(int studentId) throws SQLException {
