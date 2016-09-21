@@ -35,8 +35,11 @@ $(document).ready(function() {
       heading.css("color", "#000000");
       $("img").hide();
       heading.text("Basic Number Counter");
-      modifier = 1;
-      modifierInput.val("1");
+      if(!pro) {
+        modifier = 1;
+        modifierInput.val("1");
+      }
+
     });
     // Toggle between pro version of counter
     proButton.click(function() {
