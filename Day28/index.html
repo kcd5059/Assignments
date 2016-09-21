@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kyle's Day 28 Assignment</title>
+  <link rel="stylesheet" type="text/css" href="default.css">
+  <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</head>
+<body>
+  <div id="container">
+    <h1>Basic Number Counter</h1>
+
+    <div><span id="number-loc"></span></div>
+    <div id="main-buttons">
+      <button id="increment">+</button>
+      <button id="decrement">-</button>
+      <button id="reset">Reset</button>
+    </div>
+    <br />
+    <div id="modifier">
+      <span>Mod:</span>
+      <input id="mod-input" type="text" value=1 maxlength=6></input>
+      <br /><br />
+      <button id="pro-button">Activate Pro</button>
+    </div>
+  </div>
+  <br /><br />
+  <img src="http://i.imgur.com/1byGZp2.jpg" />
+  <!-- The image was flashing visible before the .js scripts ran so I hide() it here -->
+  <script>$("img").hide();</script>
+
+</body>
+</html>

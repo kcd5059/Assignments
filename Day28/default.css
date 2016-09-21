@@ -1,0 +1,38 @@
+#container {
+  text-align: center;
+}
+#number-loc {
+  border: 1px solid black;
+  width: 145px;
+  height: 145px;
+  text-align: center;
+  display: inline-block;
+  font-size: 30px;
+  line-height: 145px;
+}
+button {
+  font-size: 25px;
+}
+#modifier {
+  display: inline-block;
+  font-size: 20px;
+}
+.make-italic {
+  font-style: italic;
+}
+.make-red {
+  color: red;
+}
+.make-green {
+  color: green;
+}
+img {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+#pro-button {
+}
+input {
+  width: 50px;
+}
