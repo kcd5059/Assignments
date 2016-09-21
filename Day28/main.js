@@ -11,6 +11,7 @@ $(document).ready(function() {
   var pro = false;
   var modifier = 1;
   var modifierInput = $("#mod-input");
+  var backToZero = $("#back-to-zero");
 
     // Display initial value of number
     numberLocation.text(number);
@@ -39,6 +40,7 @@ $(document).ready(function() {
         modifier = 1;
         modifierInput.val("1");
       }
+      backToZero.hide();
 
     });
     // Toggle between pro version of counter
@@ -99,6 +101,12 @@ $(document).ready(function() {
         numberLocation.addClass("make-green");
       } else {
         numberLocation.removeClass("make-green");
+      }
+
+      if(pro && number === 0) {
+        backToZero.show();
+      } else {
+        backToZero.hide();
       }
 
       switch(number) {

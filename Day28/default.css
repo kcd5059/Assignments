@@ -36,3 +36,8 @@ img {
 input {
   width: 50px;
 }
+#back-to-zero {
+  display: block;
+  font-size: 20px;
+  align: center;
+}
