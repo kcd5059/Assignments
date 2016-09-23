@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kyle's Day 29 Assignment</title>
+  <link rel="stylesheet" type="text/css" href="default.css">
+  <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="main.js"></script>
+  <script src="getSlackToken.js"></script>
+</head>
+<body>
+  <div id="main-columns-container">
+    <div id="channel-container" class="main-columns">
+      <h1>Channels</h1>
+      <div id="channel-list">
+      </div>
+    </div>
+
+    <div id="message-form" class="main-columns">
+      <h1>Post Message</h1>
+      <textarea id="message-box" placeholder="Type your message here"></textarea>
+      <button class="btn-primary" id="post-button">Post</button>
+      <h4 id="error-message">**No Channel Selected**</h4>
+    </div>
+  </div>
+
+</body>
+<script>$("#error-message").hide();</script>
+</html>

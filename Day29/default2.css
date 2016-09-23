@@ -1,0 +1,59 @@
+#main-columns-container {
+position: block;
+vertical-align: top;
+color: #0099ff;
+position: absolute;
+height: 100%;
+width: 100%;
+background-color: black;
+font-family: "Courier New";
+}
+.main-columns {
+  width: 49%;
+}
+#channel-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+}
+#message-form {
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: center;
+}
+#message-box {
+  width: 95%;
+  height: 100px;
+  background-color: #262626;
+}
+#post-button {
+  display: block;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
+  border-radius: 10px;
+}
+#channel-list {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-align: left;
+  font-size: 20px;
+}
+#private-channel-list {
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  text-align: left;
+  font-size: 15px;
+  border: 1px solid white;
+}
+.green {
+  color: green;
+}
+#error-message {
+  color: red;
+}
