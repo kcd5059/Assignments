@@ -1,0 +1,3 @@
+com\ssa\config\Config.class
+com\ssa\application\Application.class
+com\ssa\controller\HelloController.class
