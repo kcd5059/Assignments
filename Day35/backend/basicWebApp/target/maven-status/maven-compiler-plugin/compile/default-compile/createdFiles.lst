@@ -1,0 +1,10 @@
+com\ssa\service\IStudentService.class
+com\ssa\service\StudentService.class
+com\ssa\controller\StudentController.class
+com\ssa\config\DBConfiguration.class
+com\ssa\dao\StudentDAO.class
+com\ssa\application\Application.class
+com\ssa\controller\HelloController.class
+eddb\Student.class
+com\ssa\entity\Student.class
+com\ssa\dao\IStudentDAO.class

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consuming REST web service in Javascript</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="default.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript">
+
+		$(document).ready(function() {
+
+			$.ajax({
+        		url: "http://localhost:8080/students"
+    		}).then(function(data) {
+    			for(var i = 0; i < data.length; i++) {
+            $("<tr id=" + data[i].id + ">" +
+            "<td>" + data[i].id + "</td>" +
+            "<td>" + data[i].first_name + "</td>" +
+            "<td>" + data[i].last_name + "</td>" +
+            "<td>" + data[i].sat + "</td>" +
+            "<td>" + data[i].gpa + "</td>" +
+            "<td>" + data[i].major_id + "</td>" +
+            "<td><span class='glyphicon glyphicon-pencil edit-button'></span></td>" +
+            "<td><span class='glyphicon glyphicon-trash delete-button'></span></td>" +
+            "</tr>").appendTo($("table"))
+          }
+          $("<tr><td><span id='add-button' class='fa fa-plus-square-o'>Add</span></td></tr>").appendTo("table");
+    		});
+
+        /*
+        $.ajax({
+          		url: "http://localhost:8080/student"
+      		}).then(function(data) {
+            console.log(data);
+              $("<tr>" +
+              "<td>" + data.id + "</td>" +
+              "<td>" + data.first_name + "</td>" +
+              "<td>" + data.last_name + "</td>" +
+              "<td>" + data.sat + "</td>" +
+              "<td>" + data.gpa + "</td>" +
+              "<td>" + data.major_id + "</td>" +
+              "</tr>").appendTo($("table"))
+      		});
+          */
+
+          $(document).on('click','.delete-button',function(){
+            var id = $(this).closest('tr').attr('id');
+            var conf = confirm("Delete student with ID: " + id + "?");
+            if(conf) {
+              $.ajax({
+                url: "http://localhost:8080/deletestudent/" + id
+              }).then(function() {
+                location.reload();
+              })
+            } // end if
+          });
+
+          $(document).on('click','.edit-button',function(){
+            var id = $(this).closest('tr').attr('id');
+            $("#update-form").show();
+            $("#student-id").text(id);
+
+            $.ajax({
+              		url: "http://localhost:8080/student/" + id
+          		}).then(function(data) {
+                var id = data.id;
+                  $("<input id='fname' type='text' " + "value=" + data.first_name + "></input>" +
+                  "<input id='lname' type='text' " + "value=" + data.last_name + "></input>" +
+                  "<input id='sat' type='text' " + "value=" + data.sat + "></input>" +
+                  "<input id='gpa' type='text' " + "value=" + data.gpa + "></input>" +
+                  "<input id='major-id' type='text' " + "value=" + data.major_id + "></input>" +
+                  "<span class='glyphicon glyphicon-ok' id='update-button'>")
+                  .appendTo($("#update-form"))
+          		});
+
+              $(document).on('click','#update-button',function() {
+                var id = $("#student-id").text();
+                var conf = confirm("Update student with ID: " + id + "?");
+                if(conf) {
+                  $.ajax({
+                    url: "http://localhost:8080/addstudent/"
+                    + $("#add-fname").val()
+                    + "/" + $("#add-lname").val()
+                    + "/" + $("#add-sat").val()
+                    + "/" + $("#add-gpa").val()
+                    + "/" + $("#add-major-id").val()
+                  }).then(function() {
+                    location.reload();
+                  });
+                } // end if
+              }); // end save edit button
+          }); //end edit button click
+
+          // Add a student
+          $(document).on('click','#add-button',function(){
+            $("#add-form").show();
+
+              $(document).on('click','#save-button',function() {
+                var conf = confirm("Save student to DB?");
+                if(conf) {
+                  $.ajax({
+                    url: "http://localhost:8080/addstudent/" + id
+                    + "/" + $("#fname").val()
+                    + "/" + $("#lname").val()
+                    + "/" + $("#sat").val()
+                    + "/" + $("#gpa").val()
+                    + "/" + $("#major-id").val()
+                  }).then(function() {
+                    location.reload();
+                  });
+                } // end if
+              }); // end save edit button
+          }); //end edit button click
+
+
+
+		}); //end ready
+
+	</script>
+</head>
+<body>
+<div id="container">
+  <table class="table table-striped">
+    <tr>
+      <th>Student ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>SAT Score</th>
+      <th>GPA</th>
+      <th>Major ID</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </table>
+  <form id="update-form">
+    <span id="student-id"></span>
+  </form>
+  <form id="add-form">
+    <span style="font-weight:bold">Add Student:</span>
+    <input id="add-fname" type="text" placeholder="First Name"></input>
+    <input id="add-lname" type="text" placeholder="Last Name"></input>
+    <input id="add-sat" type="text" placeholder="SAT" size="4"></input>
+    <input id="add-gpa" type="text" placeholder="GPA" size="4"></input>
+    <input id="add-major-id" type="text" placeholder="MajID" size="1"></input>
+    <span id="save-button" class="glyphicon glyphicon-ok"></span>
+  </form>
+</div>
+</body>
+<script>
+  $("#update-form").hide();
+  $("#add-form").hide();
+</script>
+</html>

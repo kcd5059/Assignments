@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consuming REST web service in Javascript</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="default.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript">
+
+		$(document).ready(function() {
+
+        $.ajax({
+          		url: "http://localhost:8080/student"
+      		}).then(function(data) {
+            console.log(data);
+              $("<tr id=" + data[i].id + ">" +
+              "<td>" + data.id + "</td>" +
+              "<td>" + data.first_name + "</td>" +
+              "<td>" + data.last_name + "</td>" +
+              "<td>" + data.sat + "</td>" +
+              "<td>" + data.gpa + "</td>" +
+              "<td>" + data.major_id + "</td>" +
+              "</tr>").appendTo($("table"))
+
+      		});
+
+
+          });
+
+
+
+
+		}); <!-- end ready -->
+
+	</script>
+</head>
+<body>
+<div id="container">
+  <table class="table table-striped">
+    <tr>
+      <th>Student ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>SAT Score</th>
+      <th>GPA</th>
+      <th>Major ID</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
