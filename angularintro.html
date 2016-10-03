@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="AppMod">
+  <head>
+    <title>Intro to Angular</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="http://code.jquery.com/jquery-3.1.0.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js" type="text/javascript"></script>
+    <script src="angularintro.js" type="text/javascript"></script>
+  </head>
+  <body ng-controller="AppCtrl as ctrl">
+    <h1>Angular Intro</h1>
+    <h3>Angular controller is <span ng-bind="ctrl.about" /></h3>
+    <button ng-click="ctrl.changeAbout(' PARAM1')">Change About</button>
+    <input type="text" ng-model="inputText" />
+    <p>The sum of 7 and 92 is {{7+92}}</p>
+    <p>Angular controller is {{ctrl.about}}</p>
+    <p>{{inputText}}</p>
+    <h3>List of Students</h3>
+    <table class="table table-striped">
+      <tr ng-repeat="student in ctrl.students">
+        <td ng-show="student.vis">{{student.id}}</td>
+        <td ng-show="student.vis">{{student.name}}</td>
+        <td ng-show="student.vis">{{student.sat}}</td>
+        <td ng-show="student.vis">{{student.gpa}}</td>
+        <td ng-show="student.vis">{{student.major_id}}</td>
+      </tr>
+    </table>
+    <button ng-click="ctrl.showAll()">Show All Students</button>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>A Javascript Review</title>
+  <script type="text/javascript">
+    var aVariable = 1;
+    var aString = "ABC";
+    var anArray = ['a','b','c'];
+    var anObject = {a: '1',b:'2',c:'3'};
+
+    for(var ch in anArray) {
+      console.log(ch);
+    }
+      
+    function aFunction(p1,p2,p3){
+        
+    }
+    // This is for angular
+    var anotherFunction = function(p1,p2,p3) {
+        return p1+p2+p3;
+    }
+    var abc = anotherFunction("A","B","C");
+    
+    function btnClick() {
+        var textValue = document.getElementById("theText").value;
+        console.log(textValue);
+    }
+    
+    function onLoadFunction() {
+        document.getElementById("para").innerText = "LOADED";
+    }
+  </script>
+</head>
+<body onload="onLoadFunction()">
+    <input type="text" id="theText" value="ABC" />
+    <button onclick="btnClick()">Get Text</button>
+    <p id="para"></p>
+</body>
+</html>

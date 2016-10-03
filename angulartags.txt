@@ -1,0 +1,6 @@
+ng-click: click event
+ng-repeat: iterator
+ng-app: goes in html tag to link angular library
+ng-controller: goes in body tag to link controller vars and functions
+ng-show: show things
+ng-hide: hide things

@@ -1,0 +1,22 @@
+h1 {
+    text-align: center;
+}
+.table {
+    text-align: center;
+    font-size: 22px;
+}
+input {
+    height: 32px;
+}
+#wrapper {
+        margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+th {
+  background-color: chartreuse;
+  text-align: center;
+}
+#function-div {
+  text-align: center;
+}
