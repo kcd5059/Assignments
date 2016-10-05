@@ -1,0 +1,23 @@
+h1 { 
+    text-align: center;
+}
+#form-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    width: 50%
+}
+#form-wrapper label {
+    display: inline-block;
+    float: left;
+    clear: both;
+
+}
+#form-wrapper input {
+    display: inline-block;
+    float: right;
+}
+
+#first-name.ng-invalid, #last-name.ng-invalid {
+    background-color: lightcoral;
+}

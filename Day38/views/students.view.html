@@ -1,0 +1,34 @@
+<div id="student-content">
+    <h1 id="student-list" class="h1">List of Students</h1>
+    <table class="table">
+      <tr>
+        <th></th>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>SAT</th>
+        <th>GPA</th>
+        <th>MajorID</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr id={{student.id}} ng-show="student.vis" ng-repeat="student in ctrl.students">
+        <td><input type="checkbox" class="checkbox" value="{{student.id}}"></td>
+        <td>{{student.id}}</td>
+        <td>{{student.first_name}}</td>
+        <td>{{student.last_name}}</td>
+        <td>{{student.sat}}</td>
+        <td>{{student.gpa}}</td>
+        <td>{{student.major_id}}</td>
+        <td><button class="btn" id="row-toggle-button" ng-click="ctrl.toggleRow(student.id)">Hide</button></td>
+          <td><button class="btn" id="edit-button" ng-click="ctrl.loadStudent(student.id)">Edit</button></td>
+      </tr>
+    </table>
+    <div id="function-div">
+    <input class="input" id="filter-param" type="number" placeholder="SAT score" value="" />
+    <button class="btn" ng-click="ctrl.filterBySAT()" id="filter-by-sat-button">Filter</button>
+    <button class="btn" ng-click="ctrl.refresh()">Refresh</button>
+        <a href="#/addstudent"><button class="btn">Add</button></a>
+        <button class="btn" id="delete-btn" ng-click="ctrl.deleteStudents()">Delete Selected</button>
+    </div>
+</div>
