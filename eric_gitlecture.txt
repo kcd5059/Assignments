@@ -1,0 +1,8 @@
+git checkout -b test_branch (creates new branch)
+git checkout [branch_name] (switch to another branch)
+git branch (says what branch you're on)
+git merge [branch_name to merge current branch with]
+
+HEAD is reference to latest commit in current active branch
+
+Clone repo to your computer, then pull changes for doing merge

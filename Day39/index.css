@@ -1,0 +1,93 @@
+body {
+	font: normal normal normal 12px/14.4px; 
+	border:0; margin:0; padding:0;
+}
+div#allpage {
+	margin: 10px;
+	border: 1px solid silver;
+	background-color: lightyellow;
+}
+div#header {
+	border: 1px solid silver;
+	background-color: lightgreen;
+}
+div#menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #0066cc;
+}
+div#menu li {
+    float: left;
+    font-size: 20px;
+}
+div#menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+div#menu li a:hover {
+    background-color: #003366;
+}
+div#leftbar {
+	width:25%;
+	display:inline-block;
+	background-color:grey;
+}
+div#content {
+	width:74%;
+	display:inline-block;
+}
+
+
+h1#student-list, div#addstudent, div#editstudent {
+    text-align: center;
+}
+.table {
+    text-align: center;
+    font-size: 22px;
+}
+input {
+    height: 32px;
+}
+div#student-content {
+    margin-left: auto;
+    margin-right: auto;
+}
+th {
+  background-color: #3399ff;
+  text-align: center;
+  color: white;
+}
+#function-div {
+  text-align: center;
+}
+button:first-child {
+    color: black;
+}
+
+/** Add/Edit Student Styles **/
+#form-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    width: 35%
+}
+#form-wrapper label {
+    display: inline-block;
+    float: left;
+    clear: both;
+
+}
+#form-wrapper input {
+    display: inline-block;
+    float: right;
+}
+
+#first-name.ng-invalid, #last-name.ng-invalid {
+    background-color: lightcoral;
+}

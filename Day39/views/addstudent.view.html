@@ -1,0 +1,20 @@
+<div id="addstudent">
+      <h1 class="h1">Add Student</h1>
+      <div class="form-group" id="form-wrapper">
+          <form name="edit-form">
+              <label for="student-id">ID: </label>
+              <input id="student-id" name="student-id" type="number" disabled /> <br />
+              <label for="student-id">First Name: </label>
+              <input id="first-name" ng-model="fn" name="first-name" type="text" required /> <br />
+              <label for="last-name">Last Name: </label>
+              <input id="last-name" ng-model="ln" name="last-name" type="text" required /><br />
+              <label for="sat">SAT: </label>
+              <input id="sat" name="sat" type="number" /><br />
+              <label for="gpa">GPA: </label>
+              <input id="gpa" name="gpa" type="number" /><br />
+              <label for="major-id">Major ID: </label>
+              <input id="major-id" name="major-id" type="number" /><br />
+           </form> <br /> <br />
+           <button id="save-btn" class="btn" ng-click="ctrl.addStudent()">Save</button>
+      </div>
+</div>

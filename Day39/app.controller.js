@@ -1,9 +1,27 @@
-angular.module("AppMod", ["ngRoute"])
-	.controller("AppCtrl", ['$http', function($http) {
+mod.controller("AppCtrl", ['$http', '$routeParams', function($http, $routeParams) {
 		var self = this;
-        
-        // selected student data object
-        self.targetStudent = {};
+		self.id = $routeParams.studentId;
+
+		$http.get('http://localhost:8080/students')
+			.then(function(resp){
+				self.students = resp.data;
+                for (var student of self.students) {
+                    student.vis = true;
+                    if(student.id == self.id) {
+                        self.student = student;
+                    }
+                }
+			},function(err) {
+
+			});
+    /*
+    $http.get('http://localhost:8080/student/'+self.id)
+			.then(function(resp){
+				self.student = resp.data;
+			},function(err) {
+			}); */
+    
+    
 
 		$http.get("http://localhost:8080/students")
         .then(function(result) {
@@ -72,18 +90,7 @@ angular.module("AppMod", ["ngRoute"])
     } // end addStudent
     
     self.loadStudent = function(id) {
-        var lurl = "http://localhost:8080/student/" + id;
-        window.location.replace("#/editstudent");
-             $http.get(lurl)
-             .then(function(data) {
-             self.targetStudent = data;
-             $("#student-id").val(self.targetStudent.data.id);
-             $("#first-name").val(self.targetStudent.data.first_name);
-             $("#last-name").val(self.targetStudent.data.last_name);
-             $("#sat").val(self.targetStudent.data.sat);
-             $("#gpa").val(self.targetStudent.data.gpa);
-             $("#major-id").val(self.targetStudent.data.major_id);
-        }); // end $http.get
+        window.location.replace("#/editstudent/" + id);
     } // end loadStudent
     
     self.updateStudent = function() {
@@ -103,27 +110,6 @@ angular.module("AppMod", ["ngRoute"])
     }
 
 	}]) // end controller
-	.config(['$routeProvider', function($routeProvider) {
+	
 
-		$routeProvider
-		.when('/', {
-			templateUrl: 'views/home.view.html'
-
-		}).when('/students', {
-			templateUrl: 'views/students.view.html',
-			controller: 'AppCtrl',
-			controllerAs: 'ctrl'
-
-		}).when('/about', {
-			templateUrl: 'views/about.view.html'
-
-		}).when('/addstudent', {
-			templateUrl: 'views/addstudent.view.html'
-
-		}).when('/editstudent', {
-			templateUrl: 'views/editstudent.view.html'
-
-		})
-		.otherwise({redirectTo: '/'});
-
-	}]); // end config
+;// end all 
